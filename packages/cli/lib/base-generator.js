@@ -84,7 +84,10 @@ module.exports = class BaseGenerator extends Generator {
     let opts = {};
     const jsonFileOrValue = this.options.config;
     try {
-      if (jsonFileOrValue === 'stdin' || !process.stdin.isTTY) {
+      if (
+        jsonFileOrValue === 'stdin' ||
+        (!jsonFileOrValue && !process.stdin.isTTY)
+      ) {
         this.options['yes'] = true;
         opts = await this._readJSONFromStdin();
       } else if (typeof jsonFileOrValue === 'string') {
